@@ -12,7 +12,7 @@ export default function App() {
       <CssBaseline />
       <Navbar />
 
-      <Box id="hero" sx={{ minHeight: "100vh", bgcolor: "background.default", color: "text.primary" }}>
+      <Box id="home" sx={{ minHeight: "100vh", bgcolor: "background.default", color: "text.primary" }}>
         <Hero />
       </Box>
 

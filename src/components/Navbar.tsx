@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, Typography, Button, IconButton } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Button, IconButton} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 
@@ -8,30 +8,35 @@ interface NavbarProps {
 }
 
 export const Navbar = ({ title = "My Portfolio", navItems = ["Home", "Projects", "Games", "Contact"] }: NavbarProps) => {
-  const [mobileOpen, setMobileOpen] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
+
+    const handleNavClick = (sectionId: string) => {
+        const section = document.getElementById(sectionId.toLowerCase());
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ bgcolor: "#121212" }}>
+      <AppBar position="fixed" sx={{ bgcolor: "theme.palette.background.default" }}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: "red" }}>
             {title}
           </Typography>
 
-          {/* Desktop Nav Items */}
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: "white" }}>
+            <Button key={item} sx={{ color: "white" }} onClick={() => handleNavClick(item)}>
                 {item}
-              </Button>
+            </Button>
             ))}
           </Box>
 
-          {/* Mobile Menu Icon */}
           <IconButton
             color="inherit"
             aria-label="menu"
