@@ -7,15 +7,17 @@ export const Hero = () => {
   return (
     <Box
       id="home"
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: theme.palette.background.gradient,
-        px: 2,
-        py: 4,
-      }}
+  sx={{
+    minHeight: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    px: 2,
+    py: 4,
+    backgroundImage: theme.palette.background.gradient,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  }}
     >
       <Box
         sx={{

@@ -16,7 +16,10 @@ const theme = createTheme({
     background: {
       default: "#0a0a0a",
       paper: "#1a1a1a",
-      gradient: "linear-gradient(90deg, #0a0a0a 0%, #1a0a0a 70%, #1a0a0a 30%)",
+      gradient: `
+      linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 75%, #0a0a0a 100%),
+      linear-gradient(to right, #0a0a0a 0%, #1a0a0a 100%, #0a0a0a 100%)
+    `,
     },
     primary: {
       main: "#E53935",
