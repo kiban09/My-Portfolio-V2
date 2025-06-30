@@ -17,7 +17,7 @@ const theme = createTheme({
       default: "#0a0a0a",
       paper: "#1a1a1a",
       gradient: `
-      linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 75%, #0a0a0a 100%),
+      linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(20,0,0,0.7) 60%, #0a0a0a 90%),
       linear-gradient(to right, #0a0a0a 0%, #1a0a0a 100%, #0a0a0a 100%)
     `,
     },
