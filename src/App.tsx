@@ -1,6 +1,6 @@
 import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import { Navbar } from "./components/Navbar";
-import Hero from "./sections/Hero";
+import { Hero } from "./sections/Hero";
 import Projects from "./sections/Projects";
 import Games from "./sections/Games";
 import Contact from "./sections/Contact";
@@ -16,7 +16,7 @@ export default function App() {
         <Hero />
       </Box>
 
-      <Box id="projects" sx={{ minHeight: "100vh", bgcolor: "background.paper", color: "text.primary" }}>
+      <Box id="projects" sx={{ minHeight: "100vh", bgcolor: "background.default", color: "text.primary" }}>
         <Projects />
       </Box>
 

@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, Typography, Button, IconButton} from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Button, IconButton, useTheme} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 
@@ -7,8 +7,9 @@ interface NavbarProps {
   navItems?: string[];
 }
 
-export const Navbar = ({ title = "My Portfolio", navItems = ["Home", "Projects", "Games", "Contact"] }: NavbarProps) => {
-    const [mobileOpen, setMobileOpen] = useState(false);
+export const Navbar = ({ title = "Portfolio | Kevin", navItems = ["Home", "Projects", "Games", "Contact"] }: NavbarProps) => {
+  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -23,9 +24,9 @@ export const Navbar = ({ title = "My Portfolio", navItems = ["Home", "Projects",
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ bgcolor: "theme.palette.background.default" }}>
+      <AppBar position="fixed" sx={{ bgcolor: theme.palette.background.default }}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: "red" }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: theme.palette.primary.main,}}>
             {title}
           </Typography>
 
