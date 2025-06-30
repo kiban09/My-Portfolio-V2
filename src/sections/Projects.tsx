@@ -7,8 +7,8 @@ interface ProjectSectionProps {
 
 export const Projects = ({
   projects = [
-    { label: "Landing Page", link: "#", description: "A responsive HTML & CSS landing page" },
-    { label: "Blog App", link: "#", description: "Simple CRUD Blog with modern design" },
+    { label: "Blog App", link: "https://kiban09.github.io/My-Blog-App/", description: "Simple CRUD Blog with modern design" },
+    { label: "Landing Page", link: "https://kiban09.github.io/TimeManagementApp/", description: "A Time Management App landing page" },
     { label: "CodePen Projects", description: "Small interactive CodePen projects" },
   ],
 }: ProjectSectionProps) => {
@@ -68,7 +68,6 @@ export const Projects = ({
             <Button
               variant="outlined"
               onClick={() => handleButtonClick(proj)}
-              href={proj.link}
               sx={{ mt: 2 }}
             >
               View
