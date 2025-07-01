@@ -2,8 +2,45 @@ import { Box, Typography, Stack, TextField, Button, useTheme, Divider, Grid, Too
 import { Facebook, LinkedIn, Mail } from "@mui/icons-material";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import ViewInArOutlinedIcon from '@mui/icons-material/ViewInArOutlined';
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
+
 export const Contact = () => {
   const theme = useTheme();
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    emailjs
+      .send(
+        "service_wx0km4b",
+        "template_77x3vwf",
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+        },
+        "fLn1OkCpOV4hPrCDf"
+      )
+      .then(() => {
+        alert("Message sent successfully!");
+        setForm({ name: "", email: "", message: "" });
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Failed to send message. Please try again.");
+      });
+  };
 
   return (
     <Box
@@ -58,37 +95,37 @@ export const Contact = () => {
             </Typography>
             <Stack direction="row" spacing={2} flexWrap="wrap" justifyContent="center">
   
-  <Tooltip title="Facebook">
-    <Button href="https://www.facebook.com/kevin.tom.16" target="_blank" variant="outlined" color="primary">
-      <Facebook />
-    </Button>
-  </Tooltip>
+              <Tooltip title="Facebook">
+                <Button href="https://www.facebook.com/kevin.tom.16" target="_blank" variant="outlined" color="primary">
+                  <Facebook />
+                </Button>
+              </Tooltip>
 
-  <Tooltip title="LinkedIn">
-    <Button href="https://linkedin.com/in/kevin-tom-42ba60261" target="_blank" variant="outlined" color="primary">
-      <LinkedIn />
-    </Button>
-  </Tooltip>
+              <Tooltip title="LinkedIn">
+                <Button href="https://linkedin.com/in/kevin-tom-42ba60261" target="_blank" variant="outlined" color="primary">
+                  <LinkedIn />
+                </Button>
+              </Tooltip>
 
-  <Tooltip title="Send me an Email">
-    <Button href="https://mail.google.com/mail/?view=cm&fs=1&to=kevintom111294@gmail.com" target="_blank" variant="outlined" color="primary">
-      <Mail />
-    </Button>
-  </Tooltip>
+              <Tooltip title="Send me an Email">
+                <Button href="https://mail.google.com/mail/?view=cm&fs=1&to=kevintom111294@gmail.com" target="_blank" variant="outlined" color="primary">
+                  <Mail />
+                </Button>
+              </Tooltip>
 
-  <Tooltip title="FreeCodeCamp">
-    <Button href="https://www.freecodecamp.org/Kiban09" target="_blank" variant="outlined" color="primary">
-      <LocalFireDepartmentIcon />
-    </Button>
-  </Tooltip>
+              <Tooltip title="FreeCodeCamp">
+                <Button href="https://www.freecodecamp.org/Kiban09" target="_blank" variant="outlined" color="primary">
+                  <LocalFireDepartmentIcon />
+                </Button>
+              </Tooltip>
 
-  <Tooltip title="CodePen">
-    <Button href="https://codepen.io/Kevin-Tom-the-builder" target="_blank" variant="outlined" color="primary">
-      <ViewInArOutlinedIcon />
-    </Button>
-  </Tooltip>
-
-</Stack>
+              <Tooltip title="CodePen">
+                <Button href="https://codepen.io/Kevin-Tom-the-builder" target="_blank" variant="outlined" color="primary">
+                  <ViewInArOutlinedIcon />
+                </Button>
+              </Tooltip>
+              
+            </Stack>
           </Box>
         </Grid>
         
@@ -103,21 +140,60 @@ export const Contact = () => {
               borderRadius: 2,
               display: "flex",
               flexDirection: "column",
+              alignItems: "center",
               gap: 2,
               width: "100%",
               maxWidth: 400,
+              boxShadow: `0 0 10px ${theme.palette.primary.main}40`, 
+              border: `1px solid ${theme.palette.primary.main}`,
             }}
           >
-            <Typography sx={{ textAlign: "center" }} variant="h5" color="primary" gutterBottom>
+            <Typography variant="h5" color="primary" gutterBottom sx={{ textAlign: "center" }}>
               Send a Message
             </Typography>
-            <Typography sx={{ color: theme.palette.text.secondary, mb: 2 }}>
+
+            <Typography sx={{ color: theme.palette.text.secondary, mb: 2, textAlign: "center" }}>
               Feel free to reach out by sending a message below.
             </Typography>
-            <TextField label="Name" fullWidth variant="outlined" />
-            <TextField label="Email" fullWidth variant="outlined" />
-            <TextField label="Message" fullWidth multiline minRows={4} variant="outlined" />
-            <Button variant="contained" sx={{ mt: 2 }}>
+
+             <TextField
+                label="Name"
+                fullWidth
+                variant="outlined"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Email"
+                fullWidth
+                variant="outlined"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Message"
+                fullWidth
+                multiline
+                minRows={4}
+                variant="outlined"
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+              />
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              sx={{
+                mt: 2,
+                width: "100%",
+                bgcolor: theme.palette.primary.main,
+                "&:hover": {
+                  bgcolor: "#333",
+                },
+              }}
+            >
               Submit
             </Button>
           </Box>
