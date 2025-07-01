@@ -3,6 +3,7 @@ import { createTheme } from "@mui/material/styles";
 declare module "@mui/material/styles" {
   interface TypeBackground {
     gradient?: string;
+    gradientReverse?: string;
   }
 }
 
@@ -20,6 +21,10 @@ const theme = createTheme({
       linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(20,0,0,0.7) 60%, #0a0a0a 90%),
       linear-gradient(to right, #0a0a0a 0%, #1a0a0a 100%, #0a0a0a 100%)
     `,
+    gradientReverse: `
+        linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(20,0,0,0.7) 60%, #0a0a0a 90%),
+        linear-gradient(to left, #0a0a0a 0%, #1a0a0a 100%, #0a0a0a 100%)
+      `,
     },
     primary: {
       main: "#E53935",

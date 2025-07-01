@@ -3,7 +3,7 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./sections/Hero";
 import { Projects } from "./sections/Projects";
 import { Games } from "./sections/Games";
-import Contact from "./sections/Contact";
+import { Contact } from "./sections/Contact";
 import theme from "./theme/theme";
 
 export default function App() {
@@ -24,7 +24,7 @@ export default function App() {
         <Games />
       </Box>
 
-      <Box id="contact" sx={{ minHeight: "100vh", bgcolor: "background.paper", color: "text.primary" }}>
+      <Box id="contact" sx={{ minHeight: "70vh", bgcolor: "background.paper", color: "text.primary" }}>
         <Contact />
       </Box>
     </ThemeProvider>
