@@ -59,8 +59,7 @@ export const Projects = ({
               borderRadius: 2,
               p: 3,
               textAlign: "center",
-              width: 250,
-              "&:hover": { boxShadow: 4, bgcolor: "#222" },
+              width: 250
             }}
           >
             <Typography color="primary" variant="h6">{proj.label}</Typography>
@@ -68,7 +67,13 @@ export const Projects = ({
             <Button
               variant="outlined"
               onClick={() => handleButtonClick(proj)}
-              sx={{ mt: 2 }}
+              sx={{ 
+                mt: 2,
+                bgcolor: `${theme.palette.primary.main}`,
+                color: "white",
+                border: `1px solid ${theme.palette.background.paper}`,
+                "&:hover": { bgcolor: "#333" },
+              }}
             >
               View
             </Button>

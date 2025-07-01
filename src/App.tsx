@@ -2,7 +2,7 @@ import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./sections/Hero";
 import { Projects } from "./sections/Projects";
-import Games from "./sections/Games";
+import { Games } from "./sections/Games";
 import Contact from "./sections/Contact";
 import theme from "./theme/theme";
 
