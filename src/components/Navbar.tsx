@@ -1,13 +1,15 @@
 import { AppBar, Box, Toolbar, Typography, Button, IconButton, useTheme} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface NavbarProps {
   title?: string;
   navItems?: string[];
 }
 
-export const Navbar = ({ title = "Portfolio | Kevin", navItems = ["Home", "Projects", "Games", "Contact"] }: NavbarProps) => {
+export const Navbar = ({ title = "Portfolio | Kevin", navItems = ["Home", "About me", "Projects", "Games", "Contact"] }: NavbarProps) => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -16,11 +18,15 @@ export const Navbar = ({ title = "Portfolio | Kevin", navItems = ["Home", "Proje
     };
 
     const handleNavClick = (sectionId: string) => {
-        const section = document.getElementById(sectionId.toLowerCase());
-        if (section) {
-            section.scrollIntoView({ behavior: "smooth" });
-        }
-    };
+    if (sectionId.toLowerCase() === "home") {
+      navigate("/");
+    } else {
+      const section = document.getElementById(sectionId.toLowerCase());
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
