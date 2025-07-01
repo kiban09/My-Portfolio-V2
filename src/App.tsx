@@ -1,5 +1,5 @@
 import { ThemeProvider, CssBaseline } from "@mui/material";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { LandingPage } from "./pages/LandingPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import theme from "./theme/theme";
