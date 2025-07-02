@@ -141,8 +141,7 @@ export const LandingPage = () => {
             mx: { xs: "auto", md: 0 },
             mb: { xs: 4, md: 0 },
             opacity: showCircle ? 1 : 0,
-            transition: "opacity 5s ease, transform 5s ease",
-            transitionDelay: showCircle ? "1s" : "0s",
+            transition: "opacity 2s ease, transform 2s ease",
           }}
         >
           <Box
@@ -156,8 +155,8 @@ export const LandingPage = () => {
               borderRadius: "50%",
               opacity: showCircle ? 1 : 0,
               transform:"scale(0.96)", 
-              transition: "opacity 5s ease, transform 5s ease",
-              transitionDelay: "2s"
+              transition: "opacity 1s ease, transform 1s ease",
+              transitionDelay: "1s"
             }}
           />
           {/* Dark Gradient Overlay */}
@@ -170,8 +169,8 @@ export const LandingPage = () => {
               height: "60%", 
               background: "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))",
               opacity: showCircle ? 1 : 0,
-              transition: "opacity 5s ease, transform 5s ease",
-              transitionDelay: "2s",
+              transition: "opacity 1s ease, transform 1s ease",
+              transitionDelay: "1s",
               pointerEvents: "none",
               borderRadius: "50%",
               zIndex: 2,
