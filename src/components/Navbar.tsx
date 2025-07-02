@@ -1,4 +1,5 @@
 import { AppBar, Box, Toolbar, Typography, Button, IconButton, useTheme } from "@mui/material";
+import { Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -159,6 +160,35 @@ export const Navbar = ({
             <MenuIcon />
           </IconButton>
         </Toolbar>
+        {/* {for mobile drawer} */}
+
+        <Drawer
+          anchor="left"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          sx={{
+            '& .MuiDrawer-paper': {
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.text.primary,
+              width: 200,
+            },
+          }}
+        >
+          <List>
+            {navItems.map((item) => (
+              <ListItem key={item} disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    handleDrawerToggle();
+                    handleNavClick(item);
+                  }}
+                >
+                  <ListItemText primary={item} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
       </AppBar>
     </Box>
   );

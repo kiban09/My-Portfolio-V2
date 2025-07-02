@@ -1,5 +1,6 @@
 import { Box, Typography, Stack, TextField, Button, useTheme, Divider, Grid, Tooltip } from "@mui/material";
-import { Facebook, LinkedIn, Mail } from "@mui/icons-material";
+import { Facebook, LinkedIn, Mail,  } from "@mui/icons-material";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import ViewInArOutlinedIcon from '@mui/icons-material/ViewInArOutlined';
 import { useState } from "react";
@@ -104,6 +105,12 @@ export const Contact = () => {
               <Tooltip title="LinkedIn">
                 <Button href="https://linkedin.com/in/kevin-tom-42ba60261" target="_blank" variant="outlined" color="primary">
                   <LinkedIn />
+                </Button>
+              </Tooltip>
+
+              <Tooltip title="Github">
+                <Button href="https://github.com/kiban09" target="_blank" variant="outlined" color="primary">
+                  <GitHubIcon />
                 </Button>
               </Tooltip>
 
