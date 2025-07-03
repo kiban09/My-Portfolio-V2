@@ -5,7 +5,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import ViewInArOutlinedIcon from "@mui/icons-material/ViewInArOutlined";
 import DownloadIcon from "@mui/icons-material/FileDownloadOutlined";
-import profile from "../assests/hero.png"
+import profile from "../assests/hero.png";
 import { useState, useEffect } from "react";
 
 export const LandingPage = () => {
@@ -119,7 +119,7 @@ export const LandingPage = () => {
                     opacity: showButtons ? 1 : 0,
                     transform: showButtons ? "translateY(0)" : "translateY(20px)",
                     transition: "opacity 1s ease, transform 1s ease",
-                    transitionDelay: `${0.3 + index * 0.2}s`,
+                    transitionDelay: `${0.4 + index * 0.2}s`,
                   }}
                 >
                   {item.icon}
@@ -129,7 +129,7 @@ export const LandingPage = () => {
           </Stack>
         </Box>
 
-        {/*Circular Image */}
+        {/* Circular Image */}
         <Box
           sx={{
             position: "relative",
@@ -141,41 +141,38 @@ export const LandingPage = () => {
             mx: { xs: "auto", md: 0 },
             mb: { xs: 4, md: 0 },
             opacity: showCircle ? 1 : 0,
-            transition: "opacity 2s ease, transform 2s ease",
+            transition: "opacity 2s ease",
           }}
         >
           <Box
             component="img"
-            src= {profile}
+            src={profile}
             alt="Kevin"
             sx={{
               width: "100%",
               height: "100%",
               objectFit: "cover",
               borderRadius: "50%",
-              opacity: showCircle ? 1 : 0,
-              transform:"scale(0.96)", 
-              transition: "opacity 1s ease, transform 1s ease",
-              transitionDelay: "1s"
+              transform: "scale(0.96)",
             }}
           />
-          {/* Dark Gradient Overlay */}
+
+          {/* Static Dark Gradient Overlay */}
           <Box
             sx={{
               position: "absolute",
               bottom: 0,
               left: 0,
               width: "100%",
-              height: "60%", 
-              background: "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))",
-              opacity: showCircle ? 1 : 0,
-              transition: "opacity 1s ease, transform 1s ease",
-              transitionDelay: "1s",
+              height: "60%",
+              background: "linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0))",
               pointerEvents: "none",
               borderRadius: "50%",
               zIndex: 2,
             }}
           />
+
+          {/* Rotating Dashed Circle */}
           <Box
             component="svg"
             width="100%"
@@ -199,15 +196,15 @@ export const LandingPage = () => {
               strokeLinecap="round"
               stroke={theme.palette.primary.main}
               strokeWidth="2"
-            >  
+            >
               <animate
                 attributeName="stroke-dasharray"
                 values="
-                        14 25 2 10;
-                        25 15 6 5;
-                        30 8 10 3;
-                        25 5 6 15;
-                        14 25 2 10"
+                  14 25 2 10;
+                  25 15 6 5;
+                  30 8 10 3;
+                  25 5 6 15;
+                  14 25 2 10"
                 dur="10s"
                 repeatCount="indefinite"
               />
