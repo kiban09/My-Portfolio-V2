@@ -4,6 +4,7 @@ import TabbedDodgeImg from "../assests/tabbedDodge.png";
 import KinamReactionImg from "../assests/kinamReaction.png";
 import Magic8BallImg from "../assests/magic8ball.png";
 import HomeExerciseImg from "../assests/homeExercise.png";
+import { useEffect, useRef, useState } from "react";
 
 interface Game {
   title: string;
@@ -45,10 +46,36 @@ export const Games = ({
   ],
 }: GameSectionProps) => {
   const theme = useTheme();
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            setAnimate(true);
+          }, 300); 
+        } else {
+          setAnimate(false); 
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (node) observer.observe(node);
+
+    return () => {
+      if (node) observer.unobserve(node);
+    };
+  }, []);
 
   return (
     <Box
       id="games"
+      ref={sectionRef}
       sx={{
         minHeight: "100vh",
         bgcolor: theme.palette.background.default,
@@ -78,8 +105,8 @@ export const Games = ({
       <Divider sx={{ width: "100%", maxWidth: 800, mb: 4, bgcolor: theme.palette.primary.main }} />
 
       <Grid container spacing={4} sx={{ maxWidth: 1000, width: "100%" }}>
-        {games.map((game) => (
-          <Grid size={{xs:12, sm:6 }} key={game.title}>
+        {games.map((game, index) => (
+          <Grid size={{ xs: 12, sm: 6 }} key={game.title}>
             <Box
               sx={{
                 p: 3,
@@ -91,6 +118,9 @@ export const Games = ({
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
+                opacity: animate ? 1 : 0,
+                transform: animate ? "translateY(0px)" : "translateY(40px)",
+                transition: `opacity 0.7s ease ${index * 100}ms, transform 0.7s ease ${index * 100}ms`,
               }}
             >
               {game.image && (
@@ -125,8 +155,8 @@ export const Games = ({
                   color: "white",
                   border: `1px solid ${theme.palette.background.paper}`,
                   "&:hover": {
-                    bgcolor: theme.palette.primary.dark || "#b71c1c", 
-                    borderColor: theme.palette.primary.light, 
+                    bgcolor: theme.palette.primary.dark || "#b71c1c",
+                    borderColor: theme.palette.primary.light,
                   },
                 }}
               >

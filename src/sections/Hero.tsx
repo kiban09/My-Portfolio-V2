@@ -1,4 +1,5 @@
 import { Box, Typography, Stack, Chip, Divider, useTheme } from "@mui/material";
+import { useState, useEffect } from "react";
 import profile from "../assests/123123.png";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import CodeIcon from "@mui/icons-material/Code";
@@ -8,6 +9,17 @@ import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined
 
 export const Hero = () => {
   const theme = useTheme();
+  const [showSkills, setShowSkills] = useState(false);
+  const [showInterests, setShowInterests] = useState(false);
+
+  useEffect(() => {
+    const timer1 = setTimeout(() => setShowSkills(true), 500);
+    const timer2 = setTimeout(() => setShowInterests(true), 1000);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, []);
 
   return (
     <Box
@@ -67,7 +79,7 @@ export const Hero = () => {
           <Typography fontWeight={600} sx={{ mb: 1 }}>
             Skills:
           </Typography>
-          
+
           <Stack
             direction="row"
             spacing={1}
@@ -76,8 +88,18 @@ export const Hero = () => {
             mb={2}
             justifyContent={{ xs: "center", md: "flex-start" }}
           >
-            {["HTML", "CSS", "JavaScript", "ReactJS", "Java", "Material UI"].map((skill) => (
-              <Chip key={skill} label={skill} color="primary" />
+            {["HTML", "CSS", "JavaScript", "ReactJS", "Java", "Material UI"].map((skill, index) => (
+              <Chip
+                key={skill}
+                label={skill}
+                color="primary"
+                sx={{
+                  opacity: showSkills ? 1 : 0,
+                  transform: showSkills ? "translateY(0)" : "translateY(10px)",
+                  transition: "opacity 0.5s ease, transform 0.5s ease",
+                  transitionDelay: `${index * 0.2}s`,
+                }}
+              />
             ))}
           </Stack>
 
@@ -121,7 +143,7 @@ export const Hero = () => {
             { label: "Learning new tech", icon: <AutoStoriesIcon sx={{ color: theme.palette.primary.main }} /> },
             { label: "UI/UX Design", icon: <DesignServicesIcon sx={{ color: theme.palette.primary.main }} /> },
             { label: "Game Development", icon: <SportsEsportsOutlinedIcon sx={{ color: theme.palette.primary.main }} /> },
-          ].map((interest) => (
+          ].map((interest, index) => (
             <Box
               key={interest.label}
               sx={{
@@ -138,7 +160,10 @@ export const Hero = () => {
                 alignItems: "center",
                 justifyContent: "space-between",
                 gap: 1.5,
-                transition: "transform 0.3s ease",
+                opacity: showInterests ? 1 : 0,
+                transform: showInterests ? "scale(1)" : "scale(0.9)",
+                transition: "opacity 0.5s ease, transform 0.5s ease",
+                transitionDelay: `${index * 0.2}s`,
                 "&:hover": {
                   transform: "scale(1.05)",
                   boxShadow: `0 0 20px ${theme.palette.primary.main}`,

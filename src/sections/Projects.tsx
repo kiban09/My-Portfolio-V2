@@ -1,5 +1,5 @@
 import { Box, Typography, Button, Stack, useTheme, Dialog, DialogTitle, DialogContent, Divider } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface ProjectSectionProps {
   projects?: { label: string; link?: string; description?: string }[];
@@ -14,6 +14,24 @@ export const Projects = ({
 }: ProjectSectionProps) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const target = sectionRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0.3 }
+    );
+
+    observer.observe(target);
+
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, []);
 
   const handleButtonClick = (proj: { label: string; link?: string }) => {
     if (proj.label === "CodePen Projects") {
@@ -26,6 +44,7 @@ export const Projects = ({
   return (
     <Box
       id="projects"
+      ref={sectionRef}
       sx={{
         bgcolor: theme.palette.background.default,
         display: "flex",
@@ -34,6 +53,9 @@ export const Projects = ({
         textAlign: "center",
         py: 12,
         px: 2,
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(50px)",
+        transition: "opacity 1s ease, transform 1s ease",
       }}
     >
       <Typography variant="h4" color="primary" gutterBottom>
@@ -46,30 +68,41 @@ export const Projects = ({
 
       <Divider sx={{ width: "100%", maxWidth: 800, mb: 4, bgcolor: theme.palette.primary.main }} />
 
-      <Stack direction={{ xs: "column", sm: "column" }}
+      <Stack
+        direction={{ xs: "column", sm: "column" }}
         spacing={3}
         justifyContent="center"
         alignItems="center"
       >
         {projects.map((proj) => (
           <Box
+            key={proj.label}
             sx={{
               bgcolor: "#1a1a1a",
               border: `1px solid ${theme.palette.primary.main}`,
               borderRadius: 2,
               p: 3,
               textAlign: "center",
-              width: 250
+              width: 250,
+              boxShadow: `0 0 10px ${theme.palette.primary.main}`,
+              transition: "transform 0.3s ease",
+              "&:hover": {
+                transform: "scale(1.05)",
+              },
             }}
           >
-            <Typography color="primary" variant="h6">{proj.label}</Typography>
-            <Typography sx={{ color: theme.palette.text.secondary, mt: 1 }}>{proj.description}</Typography>
+            <Typography color="primary" variant="h6">
+              {proj.label}
+            </Typography>
+            <Typography sx={{ color: theme.palette.text.secondary, mt: 1 }}>
+              {proj.description}
+            </Typography>
             <Button
               variant="outlined"
               onClick={() => handleButtonClick(proj)}
-              sx={{ 
+              sx={{
                 mt: 2,
-                bgcolor: `${theme.palette.primary.main}`,
+                bgcolor: theme.palette.primary.main,
                 color: "white",
                 border: `1px solid ${theme.palette.background.paper}`,
                 "&:hover": { bgcolor: "#333" },
@@ -80,8 +113,8 @@ export const Projects = ({
           </Box>
         ))}
       </Stack>
-      <Divider sx={{ width: "100%", maxWidth: 800, mt: 4, bgcolor: theme.palette.primary.main }} />
 
+      <Divider sx={{ width: "100%", maxWidth: 800, mt: 4, bgcolor: theme.palette.primary.main }} />
 
       <Dialog
         open={open}
@@ -129,10 +162,10 @@ export const Projects = ({
             >
               Simple Calculator
             </Button>
-            <Button 
-              variant="outlined" 
-              href="https://codepen.io/Kevin-Tom-the-builder/pen/dyrWExr" 
-              target="_blank" 
+            <Button
+              variant="outlined"
+              href="https://codepen.io/Kevin-Tom-the-builder/pen/dyrWExr"
+              target="_blank"
               sx={{
                 bgcolor: "#1a1a1a",
                 color: "white",
@@ -143,9 +176,10 @@ export const Projects = ({
             >
               25 + 5 Clock
             </Button>
-            <Button variant="outlined" 
-              href="https://codepen.io/Kevin-Tom-the-builder/pen/ExMWMGx" 
-              target="_blank" 
+            <Button
+              variant="outlined"
+              href="https://codepen.io/Kevin-Tom-the-builder/pen/ExMWMGx"
+              target="_blank"
               sx={{
                 bgcolor: "#1a1a1a",
                 color: "white",
@@ -156,9 +190,10 @@ export const Projects = ({
             >
               Drum Machine
             </Button>
-            <Button variant="outlined" 
-              href="https://codepen.io/Kevin-Tom-the-builder/pen/bGZqWyW" 
-              target="_blank" 
+            <Button
+              variant="outlined"
+              href="https://codepen.io/Kevin-Tom-the-builder/pen/bGZqWyW"
+              target="_blank"
               sx={{
                 bgcolor: "#1a1a1a",
                 color: "white",
@@ -172,7 +207,6 @@ export const Projects = ({
           </Stack>
         </DialogContent>
       </Dialog>
-
     </Box>
   );
 };
