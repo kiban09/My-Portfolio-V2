@@ -25,6 +25,7 @@ export const Hero = () => {
         spacing={6}
         alignItems="center"
         justifyContent="center"
+        textAlign={{ xs: "center", md: "left" }}
       >
         {/* Image with styled border */}
         <Box
@@ -36,6 +37,7 @@ export const Hero = () => {
             overflow: "hidden",
             flexShrink: 0,
             boxShadow: `0 0 20px ${theme.palette.primary.main}`,
+            mx: { xs: "auto", md: 0 },
           }}
         >
           <Box
@@ -52,7 +54,7 @@ export const Hero = () => {
         </Box>
 
         {/* Text Content */}
-        <Box sx={{ maxWidth: 600 }}>
+        <Box sx={{ maxWidth: 600, mx: { xs: "auto", md: 0 } }}>
           <Typography variant="h4" color="primary" gutterBottom>
             About Me
           </Typography>
@@ -65,7 +67,15 @@ export const Hero = () => {
           <Typography fontWeight={600} sx={{ mb: 1 }}>
             Skills:
           </Typography>
-          <Stack direction="row" spacing={1} flexWrap="wrap" mb={2}>
+          
+          <Stack
+            direction="row"
+            spacing={1}
+            rowGap={1.5}
+            flexWrap="wrap"
+            mb={2}
+            justifyContent={{ xs: "center", md: "flex-start" }}
+          >
             {["HTML", "CSS", "JavaScript", "ReactJS", "Java", "Material UI"].map((skill) => (
               <Chip key={skill} label={skill} color="primary" />
             ))}
@@ -82,20 +92,29 @@ export const Hero = () => {
 
       {/* Interests Section */}
       <Box sx={{ mt: 6, maxWidth: 1400, mx: "auto" }}>
-        <Box sx={{ display: "flex", alignItems: "center", mb: 4, gap: 3 }}>
-          <Typography variant="h5" color="primary" sx={{ mb: 0 }}>
+        <Box sx={{ display: "flex", alignItems: "center", mb: 4, gap: 3, flexWrap: "wrap" }}>
+          <Typography variant="h5" color="primary" sx={{ mb: 0, whiteSpace: "nowrap" }}>
             Interests
           </Typography>
+
           <Divider
             sx={{
-              width: "100%",
-              maxWidth: 956,
+              flexGrow: 1,
+              minWidth: 50,
+              borderBottomWidth: 2,
               bgcolor: theme.palette.primary.main,
+              alignSelf: "center",
             }}
           />
         </Box>
 
-        <Stack direction="row" spacing={3} flexWrap="wrap">
+        <Stack
+          direction="row"
+          spacing={2}
+          rowGap={2}
+          flexWrap="wrap"
+          justifyContent={{ xs: "center", md: "flex-start" }}
+        >
           {[
             { label: "Gaming", icon: <SportsEsportsIcon sx={{ color: theme.palette.primary.main }} /> },
             { label: "Web Development", icon: <CodeIcon sx={{ color: theme.palette.primary.main }} /> },
@@ -114,12 +133,11 @@ export const Hero = () => {
                 minWidth: 160,
                 textAlign: "center",
                 color: theme.palette.text.primary,
-                mb: 2,
                 boxShadow: `0 0 10px ${theme.palette.primary.main}`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                gap: 2,
+                gap: 1.5,
                 transition: "transform 0.3s ease",
                 "&:hover": {
                   transform: "scale(1.05)",
