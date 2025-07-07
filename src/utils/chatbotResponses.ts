@@ -43,9 +43,14 @@ const topicResponses: TopicResponse[] = [
 
 const keywordResponses: TopicResponse[] = [
   {
-    triggers: ["project", "projects", "portfolio"],
+    triggers: ["project", "projects"],
     response:
       "<strong style='color:#ff5252;'>Kevin</strong> has built various projects using React, TypeScript, Supabase, HTML, CSS, JavaScript, and MUI.",
+  },
+  {
+    triggers: ["portfolio", "website"],
+    response:
+      "<strong style='color:#ff5252;'>Kevin's Portfolio Website</strong> is built entirely with ReactJS, TypeScript, and Material UI. It's a pure frontend project showcasing his work, games, and skills.",
   },
   {
     triggers: ["game", "games"],
@@ -58,7 +63,21 @@ const keywordResponses: TopicResponse[] = [
       "<strong style='color:#ff5252;'>Kevin</strong> works with React, TypeScript, Supabase, MUI, and builds responsive projects with HTML, CSS, and JavaScript.",
   },
   {
-    triggers: ["contact", "reach", "email", "message", "how do i get in touch", "how to contact", "talk to kevin"],
+  triggers: [
+  "number", "phone", "contact number", "mobile", "call him", "cellphone", "can i call", "is his number active", "is his phone active", "is his phone working",
+  ],
+  response:
+    "Yes, his number is active, but to be sure, it's best to email him as well through the Contact section.",
+  },
+  {
+  triggers: [
+  "email", "email address", "is his email active", "is his email working", "can i email", "can i message him through email", "is his email reachable",
+],
+  response:
+    "Yes, his email is active. Feel free to reach Kevin via the Contact section. He's always open to discussing projects, collaborations, or opportunities.",
+  },
+  {
+    triggers: ["contact", "reach", "message", "how do i get in touch", "how to contact", "talk to kevin"],
     response:
       "Feel free to reach <strong style='color:#ff5252;'>Kevin</strong> via the <strong style='color:#ff5252;'>Contact</strong> section. He's always open to discussing projects, collaborations, or opportunities.",
   },
@@ -114,13 +133,13 @@ export const getFakeResponse = (input: string) => {
   const foundResponses: string[] = [];
 
   for (const item of topicResponses) {
-    if (item.triggers.some((trigger) => normalized.includes(trigger))) {
+    if (item.triggers.some((trigger) => new RegExp(`\\b${trigger}\\b`).test(normalized))) {
       foundResponses.push(item.response);
     }
   }
 
   for (const item of keywordResponses) {
-    if (item.triggers.some((trigger) => normalized.includes(trigger))) {
+    if (item.triggers.some((trigger) => new RegExp(`\\b${trigger}\\b`).test(normalized))) {
       foundResponses.push(item.response);
     }
   }
@@ -131,3 +150,5 @@ export const getFakeResponse = (input: string) => {
 
   return "Sorry, I didn't understand that. You can ask me about <strong style='color:#ff5252;'>Kevin's</strong> games, specific projects, skills, or how he builds them.";
 };
+
+
