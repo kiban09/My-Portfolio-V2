@@ -96,23 +96,26 @@ export const Navbar = ({
         }}
       >
         <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
+          <Box
+            onClick={() => navigate("/")}
             sx={{
               flexGrow: 1,
-              color: theme.palette.primary.main,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              ml: {sm: 0, md: 6, lg: 10 },
               opacity: showContent ? 1 : 0,
               transform: showContent ? "translateY(0)" : "translateY(-10px)",
               transition: "opacity 1s ease, transform 1s ease",
               transitionDelay: "0.3s",
-              ml: 10,
             }}
           >
-            {title}
-          </Typography>
+            <Typography variant="h6" sx={{ color: theme.palette.primary.main }}>
+              {title}
+            </Typography>
+          </Box>
 
-          <Box sx={{ display: { xs: "none", sm: "block" }, mr: 10, }}>
+          <Box sx={{ display: { xs: "none", sm: "block" }, mr: {sm: 0, md: 6, lg: 10 } }}>
             {navItems.map((item, index) => (
               <Button
                 key={item}
