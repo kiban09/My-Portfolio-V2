@@ -109,7 +109,7 @@ export const Games = ({
           <Grid size={{ xs: 12, sm: 6 }} key={game.title}>
             <Box
               sx={{
-                p: 3,
+                p: 0,
                 border: `1px solid ${theme.palette.primary.main}`,
                 borderRadius: 2,
                 bgcolor: "#1a1a1a",
@@ -117,10 +117,20 @@ export const Games = ({
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-between",
+                justifyContent: "flex-start",
+                overflow: "hidden",
+                position: "relative",
+                transition: "opacity 1.2s ease, transform 1.2s ease",
                 opacity: animate ? 1 : 0,
                 transform: animate ? "translateY(0px)" : "translateY(40px)",
-                transition: `opacity 0.7s ease ${index * 100}ms, transform 0.7s ease ${index * 100}ms`,
+                // transitionDelay: `${index * 100}ms`,
+                "&:hover": {
+                  transform: "scale(1.05)",
+                },
+                "&:hover .hover-image": {
+                  transform: "scale(1.5)",
+                  filter: "brightness(0.7)",
+                },
               }}
             >
               {game.image && (
@@ -128,42 +138,57 @@ export const Games = ({
                   component="img"
                   src={game.image}
                   alt={game.title}
+                  className="hover-image"
                   sx={{
                     width: "100%",
                     height: 200,
                     objectFit: "cover",
-                    borderRadius: 1,
-                    mb: 2,
+                    transition: "transform 0.3s ease, filter 0.3s ease",
                   }}
                 />
               )}
 
-              <Typography variant="h6" color="primary" gutterBottom>
-                {game.title}
-              </Typography>
-
-              <Typography sx={{ color: theme.palette.text.secondary, mb: 3 }}>
-                {game.description}
-              </Typography>
-
-              <Button
-                variant="contained"
-                href={game.link}
-                target="_blank"
+              {/* Protect text/button with background */}
+              <Box
                 sx={{
-                  bgcolor: `${theme.palette.primary.main}`,
-                  color: "white",
-                  border: `1px solid ${theme.palette.background.paper}`,
-                  "&:hover": {
-                    bgcolor: theme.palette.primary.dark || "#b71c1c",
-                    borderColor: theme.palette.primary.light,
-                  },
+                  p: 3,
+                  bgcolor: theme.palette.background.paper,
+                  position: "relative",
+                  zIndex: 1,
+                  flexGrow: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
                 }}
               >
-                View on Itch.io
-              </Button>
+                <Typography variant="h6" color="primary" gutterBottom>
+                  {game.title}
+                </Typography>
+
+                <Typography sx={{ color: theme.palette.text.secondary, mb: 3 }}>
+                  {game.description}
+                </Typography>
+
+                <Button
+                  variant="contained"
+                  href={game.link}
+                  target="_blank"
+                  sx={{
+                    bgcolor: `${theme.palette.primary.main}`,
+                    color: "white",
+                    border: `1px solid ${theme.palette.background.paper}`,
+                    "&:hover": {
+                      bgcolor: theme.palette.primary.dark || "#b71c1c",
+                      borderColor: theme.palette.primary.light,
+                    },
+                  }}
+                >
+                  View on Itch.io
+                </Button>
+              </Box>
             </Box>
           </Grid>
+
         ))}
       </Grid>
 

@@ -1,18 +1,52 @@
-import { Box, Typography, Button, Stack, useTheme, Dialog, DialogTitle, DialogContent, Divider } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Stack,
+  useTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Divider,
+  Card,
+  CardContent,
+  CardMedia,
+  CardActions,
+  useMediaQuery,
+} from "@mui/material";
 import { useState, useEffect, useRef } from "react";
+import codepenimag from "../assests/codepenImg.png";
+import landingPageImg from "../assests/LandingPageImg.png";
+import blogAppImg from "../assests/BlogAppImg.png";
 
 interface ProjectSectionProps {
-  projects?: { label: string; link?: string; description?: string }[];
+  projects?: { label: string; link?: string; description?: string; image?: string }[];
 }
 
 export const Projects = ({
   projects = [
-    { label: "Blog App", link: "https://kiban09.github.io/My-Blog-App/", description: "Simple CRUD Blog with modern design" },
-    { label: "Landing Page", link: "https://kiban09.github.io/TimeManagementApp/", description: "A Time Management App landing page" },
-    { label: "CodePen Projects", description: "Small interactive CodePen projects" },
+    {
+      label: "Blog App",
+      link: "https://kiban09.github.io/My-Blog-App/",
+      description: "Simple CRUD Blog with modern design",
+      image: blogAppImg,
+    },
+    {
+      label: "Landing Page",
+      link: "https://kiban09.github.io/TimeManagementApp/",
+      description: "A Time Management App landing page",
+      image: landingPageImg,
+    },
+    {
+      label: "CodePen Projects",
+      description: "Small interactive CodePen projects",
+      image: codepenimag,
+    },
   ],
 }: ProjectSectionProps) => {
   const theme = useTheme();
+  const isTablet = useMediaQuery("(max-width: 900px)");
+  const isMobile = useMediaQuery("(max-width: 600px)");
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -66,55 +100,96 @@ export const Projects = ({
         Explore my featured projects
       </Typography>
 
-      <Divider sx={{ width: "100%", maxWidth: 800, mb: 4, bgcolor: theme.palette.primary.main }} />
+      <Divider sx={{ width: "100%", maxWidth: 1000, mb: 4, bgcolor: theme.palette.primary.main }} />
 
       <Stack
-        direction={{ xs: "column", sm: "column" }}
+        direction={isMobile ? "column" : "row"}
         spacing={3}
         justifyContent="center"
         alignItems="center"
+        flexWrap="wrap"
+        sx={{ width: "100%" }}
       >
         {projects.map((proj) => (
-          <Box
+          <Card
             key={proj.label}
             sx={{
+              width: isMobile ? "90%" : isTablet ? "30%" : "30%",
+              minWidth: 160,
+              maxWidth: 300,
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
               bgcolor: "#1a1a1a",
+              color: "white",
               border: `1px solid ${theme.palette.primary.main}`,
-              borderRadius: 2,
-              p: 3,
-              textAlign: "center",
-              width: 250,
               boxShadow: `0 0 10px ${theme.palette.primary.main}`,
+              borderRadius: 2,
               transition: "transform 0.3s ease",
+              position: "relative",
+              overflow: "hidden",
               "&:hover": {
                 transform: "scale(1.05)",
+                "& .hover-image": {
+                  transform: "scale(1.5)",
+                  filter: "brightness(0.7)",
+                },
               },
             }}
           >
-            <Typography color="primary" variant="h6">
-              {proj.label}
-            </Typography>
-            <Typography sx={{ color: theme.palette.text.secondary, mt: 1 }}>
-              {proj.description}
-            </Typography>
-            <Button
-              variant="outlined"
-              onClick={() => handleButtonClick(proj)}
+            {proj.image && (
+              <CardMedia
+                component="img"
+                image={proj.image}
+                alt={`${proj.label} image`}
+                className="hover-image"
+                sx={{
+                  height: isMobile ? 140 : 300,
+                  width: "100%",
+                  transition: "transform 0.3s ease, filter 0.3s ease",
+                  objectFit: "cover",
+                }}
+              />
+            )}
+            <Box
               sx={{
-                mt: 2,
-                bgcolor: theme.palette.primary.main,
-                color: "white",
-                border: `1px solid ${theme.palette.background.paper}`,
-                "&:hover": { bgcolor: "#333" },
+                position: "relative",
+                zIndex: 1,
+                bgcolor: theme.palette.background.paper,
+                p: 2,
+                borderRadius: 1,
               }}
             >
-              View
-            </Button>
-          </Box>
+              <CardContent sx={{ p: 0 }}>
+                <Typography variant="h6" color="primary">
+                  {proj.label}
+                </Typography>
+                <Typography sx={{ mt: 1, color: theme.palette.text.secondary }}>
+                  {proj.description}
+                </Typography>
+              </CardContent>
+
+              <CardActions sx={{ justifyContent: "center", mt: 2 }}>
+                <Button
+                  variant="outlined"
+                  onClick={() => handleButtonClick(proj)}
+                  sx={{
+                    bgcolor: theme.palette.primary.main,
+                    color: "white",
+                    border: `1px solid ${theme.palette.background.paper}`,
+                    "&:hover": { bgcolor: "#333" },
+                  }}
+                >
+                  View
+                </Button>
+              </CardActions>
+            </Box>
+          </Card>
         ))}
       </Stack>
 
-      <Divider sx={{ width: "100%", maxWidth: 800, mt: 4, bgcolor: theme.palette.primary.main }} />
+      <Divider sx={{ width: "100%", maxWidth: 1000, mt: 4, bgcolor: theme.palette.primary.main }} />
 
       <Dialog
         open={open}

@@ -90,7 +90,7 @@ const keywordResponses: TopicResponse[] = [
   {
     triggers: ["who are you", "assistant", "ai"],
     response:
-      "I'm <strong style='color:#ff5252;'>Kevin Tom's</strong> AI assistant, here to answer questions about his portfolio, projects, games, and skills.",
+      "I'm <strong style='color:#ff5252;'>Kevin's</strong> AI assistant, here to answer questions about his portfolio, projects, games, and skills.",
   },
   {
     triggers: ["about kevin", "tell me about kevin"],
@@ -100,7 +100,7 @@ const keywordResponses: TopicResponse[] = [
   {
     triggers: ["hi", "hello", "hey"],
     response:
-      "Hello! I'm <strong style='color:#ff5252;'>Kevin Tom's</strong> AI assistant. Ask me about his projects, games, or how he builds his work.",
+      "Hello! I'm <strong style='color:#ff5252;'>Kevin's</strong> AI assistant. Ask me about his projects, games, or how he builds his work.",
   },
   {
     triggers: ["thank you", "thanks", "appreciate", "good answer", "nice answer", "helpful"],
