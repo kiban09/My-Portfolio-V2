@@ -1,5 +1,14 @@
 import { useState, useEffect, useRef } from "react";
-import { Box, Button, TextField, Typography, Stack, IconButton, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Stack,
+  IconButton,
+  Paper,
+  Tooltip,
+} from "@mui/material";
 import ChatIcon from "@mui/icons-material/Chat";
 import { getFakeResponse } from "../utils/chatbotResponses";
 
@@ -13,10 +22,12 @@ export const FloatingChatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [animate, setAnimate] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(true);
   const chatRef = useRef<HTMLDivElement>(null);
-  const [typingDots, setTypingDots] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [typingDots, setTypingDots] = useState("");
 
+  // Handle sending a message
   const handleSend = () => {
     if (!input.trim()) return;
 
@@ -41,6 +52,7 @@ export const FloatingChatbot = () => {
     }, 1500);
   };
 
+  // Starts animated dots while AI is "typing"
   const startTypingAnimation = () => {
     let count = 0;
     const interval = setInterval(() => {
@@ -51,21 +63,25 @@ export const FloatingChatbot = () => {
     (window as any).typingInterval = interval;
   };
 
+  // Stops animated dots
   const stopTypingAnimation = () => {
     clearInterval((window as any).typingInterval);
     setTypingDots("");
   };
 
+  // Opens chat and begins animation
   const handleOpen = () => {
     setOpen(true);
     setTimeout(() => setAnimate(true), 50);
   };
 
+  // Closes chat with fade-out effect
   const handleClose = () => {
     setAnimate(false);
     setTimeout(() => setOpen(false), 200);
   };
 
+  // Automatically closes chat when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (chatRef.current && !chatRef.current.contains(event.target as Node)) {
@@ -84,30 +100,106 @@ export const FloatingChatbot = () => {
     };
   }, [open]);
 
+  // Scrolls to the latest message when new messages arrive
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
+  // Automatically hide tooltip after 3 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => setShowTooltip(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
+      {/* Floating Chat Icon */}
       {!open && (
-        <IconButton
-          onClick={handleOpen}
+        <Box
           sx={{
             position: "fixed",
             bottom: 20,
-            right: 20,
-            bgcolor: "red",
-            color: "white",
-            "&:hover": { bgcolor: "darkred" },
+            right: 12,
+            zIndex: 1000,
           }}
         >
-          <ChatIcon />
-        </IconButton>
+          <Tooltip
+            title="Ask me anything about my portfolio!"
+            open={showTooltip}
+            placement="left"
+            arrow
+            slotProps={{
+              tooltip: {
+                sx: {
+                  fontSize: "0.85rem",
+                  maxWidth: 200,
+                },
+              },
+              popper: {
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [0, 8],
+                    },
+                  },
+                ],
+              },
+              transition: {
+                timeout: 800, 
+              },
+            }}
+          >
+
+            <Box
+              sx={{
+                position: "relative",
+                width: 56,
+                height: 56,
+                right: 20
+              }}
+            >
+              {/* Ping Animation */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "50%",
+                  bgcolor: "rgba(255, 0, 0, 0.4)",
+                  animation: "ping 2s infinite ease-out",
+                  zIndex: 0,
+                }}
+              />
+              {/* Icon Button */}
+              <IconButton
+                id="chat-icon"
+                onClick={handleOpen}
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  bgcolor: "red",
+                  color: "white",
+                  "&:hover": { bgcolor: "darkred" },
+                  boxShadow: 6,
+                  zIndex: 1,
+                }}
+              >
+                <ChatIcon />
+              </IconButton>
+            </Box>
+          </Tooltip>
+        </Box>
       )}
 
+      {/* Chat Window */}
       {open && (
         <Box
           ref={chatRef}
@@ -128,6 +220,7 @@ export const FloatingChatbot = () => {
             opacity: animate ? 1 : 0,
             overflow: "hidden",
             transition: "height 0.3s ease, opacity 0.3s ease",
+            zIndex: 1001,
           }}
         >
           <Typography variant="h6" color="primary" mb={1}>
@@ -172,15 +265,20 @@ export const FloatingChatbot = () => {
                 >
                   <Typography
                     variant="body2"
-                    dangerouslySetInnerHTML={{ __html: msg.text === "..." || msg.text === "." || msg.text === ".." ? typingDots : msg.text }}
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        msg.text === "..." || msg.text === "." || msg.text === ".."
+                          ? typingDots
+                          : msg.text,
+                    }}
                   />
                 </Paper>
               </Stack>
             ))}
-
             <div ref={messagesEndRef} />
           </Box>
 
+          {/* Input Area */}
           <Stack direction="row" spacing={1}>
             <TextField
               size="small"
