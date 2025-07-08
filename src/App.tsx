@@ -5,6 +5,7 @@ import PortfolioPage from "./pages/PortfolioPage";
 import theme from "./theme/theme";
 import { Navbar } from "./components/Navbar";
 import { FloatingChatbot } from "./components/FloatingChatbot";
+import { NotFound } from "./pages/NotFound";
 
 export default function App() {
   const location = useLocation();
@@ -15,6 +16,7 @@ export default function App() {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <FloatingChatbot />
     </ThemeProvider>
