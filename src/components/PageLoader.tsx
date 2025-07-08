@@ -1,4 +1,3 @@
-// src/components/PageLoader.tsx
 import { Box } from "@mui/material";
 import Lottie from "lottie-react";
 import animationData from "../assests/computerAnimation.json";
