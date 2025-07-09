@@ -11,9 +11,16 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  ListItemIcon,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useState, useEffect } from "react";
+import HomeIcon from "@mui/icons-material/Home";
+import PersonIcon from "@mui/icons-material/Person";
+import CodeIcon from "@mui/icons-material/Code";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import MailIcon from "@mui/icons-material/Mail";
+
+import { useState, useEffect, JSX } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { PageLoader } from "./PageLoader";
 
@@ -21,6 +28,14 @@ interface NavbarProps {
   title?: string;
   navItems?: string[];
 }
+
+const navIcons: Record<string, JSX.Element> = {
+  Home: <HomeIcon />,
+  About: <PersonIcon />,
+  Projects: <CodeIcon />,
+  Games: <SportsEsportsIcon />,
+  Contact: <MailIcon />,
+};
 
 export const Navbar = ({
   title = "Portfolio | Kevin",
@@ -67,12 +82,10 @@ export const Navbar = ({
     }
   };
 
-  // Hide loader after navigating
   useEffect(() => {
     setLoading(false);
   }, [location.pathname]);
 
-  // Scroll observer to update active nav
   useEffect(() => {
     if (location.pathname === "/") {
       setActiveSection("home");
@@ -105,7 +118,6 @@ export const Navbar = ({
     };
   }, [navItems, location.pathname]);
 
-  // Entry animation for navbar and content
   useEffect(() => {
     const timer = setTimeout(() => setShowNavbar(true), 200);
     const contentTimer = setTimeout(() => setShowContent(true), 800);
@@ -206,25 +218,70 @@ export const Navbar = ({
             onClose={handleDrawerToggle}
             sx={{
               "& .MuiDrawer-paper": {
-                backgroundColor: theme.palette.background.default,
+                backgroundColor: theme.palette.background.paper,
                 color: theme.palette.text.primary,
-                width: 200,
+                width: 240,
+                px: 2,
+                py: 3,
+                borderRight: `1px solid ${theme.palette.divider}`,
+                boxShadow: "2px 0 8px rgba(0, 0, 0, 0.4)",
               },
             }}
           >
+            <Box
+              sx={{
+                mb: 3,
+                textAlign: "center",
+                fontWeight: 600,
+                fontSize: "1.1rem",
+                color: theme.palette.primary.main,
+              }}
+            >
+              <Typography variant="h6">Kevin's Portfolio</Typography>
+            </Box>
+
             <List>
-              {navItems.map((item) => (
-                <ListItem key={item} disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      handleDrawerToggle();
-                      handleNavClick(item);
-                    }}
-                  >
-                    <ListItemText primary={item} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
+              {navItems.map((item) => {
+                const isActive = activeSection === item.toLowerCase();
+
+                return (
+                  <ListItem key={item} disablePadding>
+                    <ListItemButton
+                      onClick={() => {
+                        handleDrawerToggle();
+                        handleNavClick(item);
+                      }}
+                      sx={{
+                        borderRadius: 1,
+                        mb: 0.5,
+                        bgcolor: isActive ? "rgba(255,255,255,0.06)" : "transparent",
+                        color: isActive ? theme.palette.primary.main : "inherit",
+                        transition: "all 0.3s ease",
+                        "&:hover, &:active": {
+                          bgcolor: "rgba(255,255,255,0.08)",
+                          transform: "scale(0.98)",
+                        },
+                      }}
+                    >
+                      <ListItemIcon
+                        sx={{
+                          color: isActive ? theme.palette.primary.main : "inherit",
+                          minWidth: 32,
+                        }}
+                      >
+                        {navIcons[item]}
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={item}
+                        primaryTypographyProps={{
+                          fontSize: "1rem",
+                          fontWeight: isActive ? 600 : 400,
+                        }}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                );
+              })}
             </List>
           </Drawer>
         </AppBar>
