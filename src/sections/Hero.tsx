@@ -30,6 +30,7 @@ export const Hero = () => {
         flexDirection: "column",
         justifyContent: "center",
         p: 4,
+        pt: { xs: 13, md: 0 },
       }}
     >
       <Stack
