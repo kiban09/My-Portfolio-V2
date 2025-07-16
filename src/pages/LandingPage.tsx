@@ -82,7 +82,7 @@ export const LandingPage = () => {
             variant="outlined"
             color="primary"
             rel="noopener noreferrer"
-            href="/My-Portfolio-V2/CV_Tom.pdf"
+            href="/My-Portfolio-V2/Tom_Resume.pdf"
             target="_blank"
             sx={{
               mt: 2,
@@ -92,7 +92,7 @@ export const LandingPage = () => {
               transition: "opacity 1s ease, transform 1s ease",
             }}
           >
-            View / Download CV
+            View / Download Resume
             <DownloadIcon />
           </Button>
 
